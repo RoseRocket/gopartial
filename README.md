@@ -20,7 +20,58 @@ $ go get github.com/roserocket/gopartial
 ## Dependencies
 
 ```
-$go get github.com/guregu/null
+$ go get github.com/guregu/null
+```
+
+## Methods
+
+#### `PartialUpdate(dest interface{}, partial map[string]interface{}, tagName string, skipConditions []func(reflect.StructField) bool, updaters []func(reflect.Value, reflect.Value) bool) ([]string, error)`
+
+|    Argument    |                    Type                     |                                         Description                                         |
+| :------------: | :-----------------------------------------: | :-----------------------------------------------------------------------------------------: |
+|      dest      |                `interface{}`                |                      Destination struct (Must be a pointer to struct)                       |
+|    partial     |          `map[string]interface{}`           |                     Partial data in the form of map[string]interface{}                      |
+|    tagName     |                  `string`                   | The struct tag name that you'll be mapping the struct field to based on the json field name |
+| skipConditions |     `[]func(reflect.StructField) bool`      |                              Array of skip condition functions                              |
+|    updaters    | `[]func(reflect.Value, reflect.Value) bool` |                                 Array of updater functions                                  |
+
+This function can be easily extended if you have certain skip conditions while updating the struct.
+For example you want to skip all the struct field that has tagname `props` with value of `readonly`, then you can create a function as follow:
+
+```go
+// SkipReadOnly skips all field that has tag readonly
+func SkipReadOnly(field reflect.StructField) bool {
+	props := strings.Split(field.Tag.Get("props"), ",")
+	return utils.IndexOf(props, "readonly") >= 0
+}
+```
+
+You can also extend this function to update a certain custom type within your application.
+Example:
+
+```go
+type MyType string
+
+// MyTypeUpdater update MyType
+func MyTypeUpdater(fieldValue reflect.Value, v reflect.Value) bool {
+	switch fieldValue.Interface().(type) {
+	case MyType:
+		// if its null value
+		if !v.IsValid() {
+			newValue := reflect.ValueOf(MyType{}})
+			fieldValue.Set(newValue)
+			return true
+		}
+		// only set if underlying type is a string
+		if v.Kind() == reflect.String {
+			newValue := reflect.ValueOf(MyType(v.String()))
+			fieldValue.Set(newValue)
+			return true
+		}
+	}
+
+	return false
+}
 ```
 
 ## Example
@@ -45,7 +96,7 @@ type User struct {
 func UpdateUserPartially(user *User, partialDataJSON json.RawMessage) (*User, error) {
 
 
-    var partialData map[string]interface{}
+    var partialData map[string]interface{}{}
     if err := json.Unmarshal(partialDataJSON, &partialData); err != nil {
         log.Fatal(err)
         return

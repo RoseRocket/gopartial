@@ -143,8 +143,8 @@ func MapStringInterfaceUpdater(fieldValue reflect.Value, v reflect.Value) bool {
 	return false
 }
 
-// ProcessBool ProcessBool
-func ProcessBool(fieldValue reflect.Value, v reflect.Value) bool {
+// BoolUpdater update bool (pointer or value)
+func BoolUpdater(fieldValue reflect.Value, v reflect.Value) bool {
 	if fieldValue.Kind() == reflect.Bool {
 		if v.Kind() == reflect.Bool {
 			fieldValue.Set(v)
@@ -170,8 +170,8 @@ func ProcessBool(fieldValue reflect.Value, v reflect.Value) bool {
 	return false
 }
 
-// ProcessInt ProcessInt
-func ProcessInt(fieldValue reflect.Value, v reflect.Value) bool {
+// IntUpdater update int (any int type Int8, Int16, Int32, Int64 and whether its a pointer or a value)
+func IntUpdater(fieldValue reflect.Value, v reflect.Value) bool {
 	if fieldValue.Kind() == reflect.Int ||
 		fieldValue.Kind() == reflect.Int8 ||
 		fieldValue.Kind() == reflect.Int16 ||
@@ -290,8 +290,8 @@ func ProcessInt(fieldValue reflect.Value, v reflect.Value) bool {
 	return false
 }
 
-// ProcessFloat ProcessFloat
-func ProcessFloat(fieldValue reflect.Value, v reflect.Value) bool {
+// FloatUpdater update int (any float type Float8, Float16, Float32, Float64 and whether its a pointer or a value)
+func FloatUpdater(fieldValue reflect.Value, v reflect.Value) bool {
 	if fieldValue.Kind() == reflect.Float32 ||
 		fieldValue.Kind() == reflect.Float64 {
 
@@ -359,8 +359,8 @@ func ProcessFloat(fieldValue reflect.Value, v reflect.Value) bool {
 	return false
 }
 
-// ProcessTime ProcessTime
-func ProcessTime(fieldValue reflect.Value, v reflect.Value) bool {
+// TimeUpdater update time (pointer or value)
+func TimeUpdater(fieldValue reflect.Value, v reflect.Value) bool {
 	switch fieldValue.Interface().(type) {
 	case time.Time:
 		if !v.IsValid() {
@@ -406,8 +406,8 @@ var Updaters = []func(reflect.Value, reflect.Value) bool{
 	NullBoolUpdater,
 	NullTimeUpdater,
 	MapStringInterfaceUpdater,
-	ProcessInt,
-	ProcessFloat,
-	ProcessTime,
-	ProcessBool,
+	IntUpdater,
+	FloatUpdater,
+	TimeUpdater,
+	BoolUpdater,
 }
