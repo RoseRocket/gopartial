@@ -25,7 +25,7 @@ $ go get github.com/guregu/null
 
 ## Methods
 
-#### `PartialUpdate(dest interface{}, partial map[string]interface{}, tagName string, skipConditions []func(reflect.StructField) bool, updaters []func(reflect.Value, reflect.Value) bool) ([]string, error)`
+#### `func PartialUpdate(dest interface{}, partial map[string]interface{}, tagName string, skipConditions []func(reflect.StructField) bool, updaters []func(reflect.Value, reflect.Value) bool) ([]string, error)`
 
 |    Argument    |                    Type                     |                                         Description                                         |
 | :------------: | :-----------------------------------------: | :-----------------------------------------------------------------------------------------: |
