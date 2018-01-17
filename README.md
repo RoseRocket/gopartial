@@ -74,6 +74,13 @@ func MyTypeUpdater(fieldValue reflect.Value, v reflect.Value) bool {
 }
 ```
 
+### Why do we need updatedFields returned?
+
+The idea is using the list of updated fields, you can dynamically build the sql query to update the record in the database.
+
+Hint: use `reflect.Type.FieldByName` function to get the `reflect.StructField` and use `reflect.StructField.Tag.Get("db")`
+to get the db field name.
+
 ## Example
 
 ```go
