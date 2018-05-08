@@ -11,6 +11,8 @@ The challenge becomes even harder when dealing with nullable data because
 if you use json null value as a way to determine whether a struct field should be updated or not,
 you'll lose ability to update the struct to null value.
 
+A good practical example of this problem is when you want to implement HTTP `PATCH` Request. 
+
 ## Installation
 
 ```
