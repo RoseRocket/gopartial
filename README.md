@@ -40,7 +40,7 @@ type User struct {
     ID          string          `json:"id"`
     Name        string          `json:"name"`
     Age         *int            `json:"age"` // Can be null
-    DeletedAt   *time.Time      `json:"verified_at"` // Can be null
+    DeletedAt   *time.Time      `json:"deleted_at"` // Can be null
 }
 
 // Imagine you have a Web API that can partially update an existing User in database
