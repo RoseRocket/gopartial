@@ -1,11 +1,11 @@
 # gopartial - Golang Partial Struct Update
 
-This mini library provides a helper function to update go object partially from incoming json data.
+This mini library provides a helper function to update go struct partially from incoming json data.
 
 ## Why?
 
 The challenge with golang is it is hard to take a dynamic data such as json and apply partial update
-to a golang struct due to the 'unknown' values that you might receive from a field in a json data.
+to a golang struct due to the 'unknown' type/value that you might receive from a field in a json data.
 
 The challenge becomes even harder when dealing with nullable data because
 if you use json null value as a way to determine whether a struct field should be updated or not,
