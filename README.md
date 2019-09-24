@@ -47,10 +47,9 @@ type User struct {
 func UpdateUserPartially(user *User, partialDataJSON json.RawMessage) (*User, error) {
 
 
-    var partialData map[string]interface{}{}
+    var partialData map[string]interface{}
     if err := json.Unmarshal(partialDataJSON, &partialData); err != nil {
         log.Fatal(err)
-        return
     }
 
     updatedFields, err := gopartial.PartialUpdate(user, partialData, "json", gopartial.SkipConditions, gopartial.Updaters)
@@ -62,11 +61,11 @@ func UpdateUserPartially(user *User, partialDataJSON json.RawMessage) (*User, er
 func main() {
     t := time.Now()
     // Existing user data
-    var user := &User{
+    user := &User{
         ID:         "1",
         Name:       "John",
         Age:        nil,
-        DeletedAt:  *t,
+        DeletedAt:  &t,
     }
 
     log.Printf("Initial user object: %+v", user)
