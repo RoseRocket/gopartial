@@ -116,7 +116,7 @@ func NullTimeUpdater(fieldValue reflect.Value, v reflect.Value) bool {
 	case null.Time:
 		// if its null value
 		if !v.IsValid() {
-			newValue := reflect.ValueOf(null.Time{Valid: false})
+			newValue := reflect.ValueOf(null.Time{sql.NullTime{Valid: false}})
 			fieldValue.Set(newValue)
 			return true
 		}
