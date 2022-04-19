@@ -83,7 +83,7 @@ func main() {
     // Updated user data should now be:
     // User{
     //     ID:         "1",
-    //     Name:       "Johnny",
+    //     Name:       "Johnson",
     //     Age:        21,
     //     DeletedAt:  nil,
     // }
